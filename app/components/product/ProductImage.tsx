@@ -16,7 +16,7 @@ const ProductImage: React.FC<productImageProps> = ({
 }) => {
   return (
     <div className=" grid grid-cols-6 gap-2 items-center justify-center h-full max-h-[500px] min-h-[300px] sm:min-h-[400px]">
-      <div className="flex-col gap-4 cursor-pointer border  h-full max-h-[500px] min-h-[300px] sm:min-h-[400px] flex items-center justify-center ">
+      <div className="flex-col gap-4 cursor-pointer  h-full max-h-[500px] min-h-[300px] sm:min-h-[400px] flex items-center justify-center ">
         {product.images.map((image: any) => {
           return (
             <div
@@ -42,7 +42,7 @@ const ProductImage: React.FC<productImageProps> = ({
       <div className="col-span-5 relative aspect-square">
         <Image
           src={cartProduct.selectedImg.image}
-          alt="image"
+          alt={product.name}
           className="object-contain w-full h-full"
           fill
         />

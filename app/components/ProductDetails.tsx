@@ -7,6 +7,7 @@ import SetColor from "./product/SetColor";
 import SetQuantity from "./product/SetQuantity";
 import Button from "./product/Button";
 import ProductImage from "./product/ProductImage";
+import { productRating } from "../Helpers/reatingReview";
 
 interface Props {
   product: any;
@@ -42,11 +43,11 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
   const Horizontal = () => {
     return <hr className="w-[30%] my-1" />;
   };
-  const productRating =
-    product.reviews.reduce(
-      (acc: number, review: any) => acc + review.rating,
-      0
-    ) / product.reviews.length;
+  // const productRating =
+  //   product.reviews.reduce(
+  //     (acc: number, review: any) => acc + review.rating,
+  //     0
+  //   ) / product.reviews.length;
 
   const handleColorSelect = useCallback((value: SelectedImgType) => {
     setCartProduct((prev) => ({ ...prev, selectedImg: value }));
@@ -74,7 +75,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
           {truncateText(product?.name)}
         </h1>
         <div className="flex items-center gap-2">
-          <Rating value={productRating} readOnly precision={0.5} />
+          <Rating value={productRating(product)} readOnly precision={0.5} />
           <p>{product.reviews.length} reviews</p>
         </div>
         <Horizontal />
