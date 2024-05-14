@@ -142,7 +142,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
                 cartProduct={CartProduct}
                 handleQtyDncrement={handleQtyDncrement}
                 handleQtyIncrement={handleQtyIncrement}
-              />{" "}
+              />
             </div>
             <Horizontal />
             <div className="max-w-[300px]">

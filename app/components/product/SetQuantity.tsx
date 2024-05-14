@@ -9,7 +9,7 @@ interface SetQtyProps {
   handleQtyIncrement: () => void;
   handleQtyDncrement: () => void;
 }
-const btnStayl = 'border-[1.2px] border-slate-300 px-2 py-1 rounded-md text-sm';
+const btnStayl = "border-[1.2px] border-slate-300 px-2 py-1 rounded-md text-sm";
 
 const SetQuantity: React.FC<SetQtyProps> = ({
   cartCounter,
@@ -19,11 +19,15 @@ const SetQuantity: React.FC<SetQtyProps> = ({
 }) => {
   return (
     <div className="flex gap-8 items-center">
-      {cartCounter ? null : <div className="font-semibold">QTY :</div>}
+      {cartCounter ? null : <div className="font-semibold"></div>}
       <div className="flex items-center gap-2 text-base">
-        <Button className={btnStayl} onClick={handleQtyDncrement}>-</Button>
+        <Button className={btnStayl} onClick={handleQtyDncrement}>
+          -
+        </Button>
         <div>{cartProduct.quantity}</div>
-        <Button className={btnStayl} onClick={handleQtyIncrement}>+</Button>
+        <Button className={btnStayl} onClick={handleQtyIncrement}>
+          +
+        </Button>
       </div>
     </div>
   );
