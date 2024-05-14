@@ -14,6 +14,9 @@ type CartContextType = {
   cartProducts: CartProductType[] | null;
   handelAddToCart: (product: CartProductType) => void;
   handelRemoveToCart: (product: CartProductType) => void;
+  hendalecartTotalquantity: (product: CartProductType) => void;
+  hendalehandleQtyDncrement: (product: CartProductType) => void;
+  handleclearCart: () => void;
 };
 
 export const CartContext = createContext<CartContextType | null>(null);
@@ -77,23 +80,65 @@ export const CartContextProvider = (Props: Props) => {
     },
     [cartProducts]
   );
-
-  // useEffect(() => {
-  //   if (cartProducts) {
-  //     toast.success(
-  //       `${cartProducts[cartProducts.length - 1].name} added to cart`,
-  //       {
-  //         position: "top-center",
-  //       }
-  //     );
-  //   }
-  // }, [cartProducts]);
+  const hendalecartTotalquantity = useCallback(
+    (product: CartProductType) => {
+      let updatCart;
+    if(product.quantity === 99){
+      return toast.error("Maximum quantity reached", {
+        position: "top-center",
+      })
+    }
+    if (cartProducts) {
+      updatCart = [...cartProducts];
+      const existingProduct = cartProducts.findIndex(
+        (index) => index.id === product.id
+      );
+      if (existingProduct > -1) {
+        updatCart[existingProduct].quantity += 1;
+      }
+      setCartProducts(updatCart);
+      localStorage.setItem("cart", JSON.stringify(updatCart));
+    }
+    },
+    [cartProducts]
+  );
+  const hendalehandleQtyDncrement = useCallback(
+    (product: CartProductType) => {
+      let updatCart;
+    if(product.quantity === 1){
+      return toast.error("Minimum quantity reached", {
+        position: "top-center",
+      })
+    }
+    if (cartProducts) {
+      updatCart = [...cartProducts];
+      const existingProduct = cartProducts.findIndex(
+        (index) => index.id === product.id
+      );
+      if (existingProduct > -1) {
+        updatCart[existingProduct].quantity -= 1;
+      }
+      setCartProducts(updatCart);
+      localStorage.setItem("cart", JSON.stringify(updatCart));
+    }
+    },
+    [cartProducts]
+  );
+  const handleclearCart = useCallback(() => {
+    setCartProducts(null);
+    setCartTotalQTY(0);
+    localStorage.setItem("cart", JSON.stringify(null));
+  },[setCartProducts, setCartTotalQTY]);
+ 
 
   const value = {
     cartTotalQTY,
     cartProducts: cartProducts || [],
     handelAddToCart,
     handelRemoveToCart,
+    hendalecartTotalquantity,
+    hendalehandleQtyDncrement,
+    handleclearCart
   };
   return <CartContext.Provider value={value} {...Props} />;
 };

@@ -9,7 +9,7 @@ import ItemContent from "./ItemContent";
 import { formatPrice } from "@/utils/formatPrice";
 
 const CartClient = () => {
-  const { cartProducts } = useCart();
+  const { cartProducts, handleclearCart } = useCart();
   if (!cartProducts || cartProducts.length === 0) {
     return (
       <div className="flex flex-col items-center gap-2">
@@ -38,7 +38,7 @@ const CartClient = () => {
       </div>
       <div className="border-t-[1.5px] border-slate-300 py-4 flex justify-between gap-4">
         <div className="w-[90px]">
-          <Button label="Clear Cart" onClick={() => {}} small outline />
+          <Button label="Clear Cart" onClick={()=>handleclearCart()} small outline />
         </div>
         <div className="text-sm items-start flex flex-col gap-1">
           <div className="flex justify-between w-full text-base font-semibold">

@@ -14,7 +14,11 @@ interface Props {
   product: any;
 }
 const ItemContent: React.FC<Props> = ({ product }) => {
-  const { handelRemoveToCart } = useCart();
+  const {
+    handelRemoveToCart,
+    hendalecartTotalquantity,
+    hendalehandleQtyDncrement,
+  } = useCart();
   const [CartProduct, setCartProduct] = useState<CartProductType>({
     id: product?.id || "",
     name: product?.name || "",
@@ -25,59 +29,54 @@ const ItemContent: React.FC<Props> = ({ product }) => {
     price: product?.price || 0,
     quantity: 1,
   });
-  const handleQtyIncrement = useCallback(() => {
-    if (CartProduct.quantity === 100) return;
-    setCartProduct((prev) => ({ ...prev, quantity: prev.quantity + 1 }));
-  }, [setCartProduct, CartProduct.quantity]);
-
-  const handleQtyDncrement = useCallback(() => {
-    if (CartProduct.quantity === 1) return;
-    setCartProduct((prev) => ({ ...prev, quantity: prev.quantity - 1 }));
-  }, [setCartProduct, CartProduct.quantity]);
 
   return (
     <div className="grid grid-cols-5 text-xs md:text-sm border-[1.5px] border-slate-200 py-4 items-center gap-4">
       <div className="col-span-2 justify-start pl-2 flex gap-2 md:gap-4">
-        <Link href={`/product/${product?.id}`}>
-          <Image
-            src={product?.selectedImg?.image}
-            alt={product?.name}
-            width={50}
-            height={50}
-          />
-        </Link>
-        <div>
-          <Link href={`/product/${product?.id}`}>
-            <h3 className="text-slate-700">
-              {truncateText(product?.name || "")}
-            </h3>
+        {product && (
+          <Link href={`/product/${product.id}`}>
+            <Image
+              src={product.selectedImg.image}
+              alt={product.name}
+              width={50}
+              height={50}
+            />
           </Link>
-          <p className="text-slate-500">{product?.brand || ""}</p>
-          <p>{product?.selectedImg?.color || ""}</p>
+        )}
+        {product && (
+          <div>
+            <Link href={`/product/${product.id}`}>
+              <h3 className="text-slate-700">{truncateText(product.name)}</h3>
+            </Link>
+            <p className="text-slate-500">{product.brand}</p>
+            <p>{product.selectedImg.color}</p>
 
-          <button
-            onClick={() => handelRemoveToCart(CartProduct)}
-            className="text-slate-400 underline"
-          >
-            Remove
-          </button>
-        </div>
+            <button
+              onClick={() => handelRemoveToCart(product)}
+              className="text-slate-400 underline"
+            >
+              Remove
+            </button>
+          </div>
+        )}
       </div>
       {/* price */}
       <div className="justify-self-center">
-        <h2>{formatPrice(product?.price || 0)}</h2>
+        {product && <h2>{formatPrice(product.price)}</h2>}
       </div>
       {/* qty */}
       <div className="justify-self-center">
-        <SetQuantity
-          //   cartCounter={true}
-          cartProduct={CartProduct}
-          handleQtyDncrement={handleQtyDncrement}
-          handleQtyIncrement={handleQtyIncrement}
-        />
+        {product && (
+          <SetQuantity
+            cartCounter={true}
+            cartProduct={product}
+            handleQtyIncrement={() => hendalecartTotalquantity(product)}
+            handleQtyDncrement={() => hendalehandleQtyDncrement(product)}
+          />
+        )}
       </div>
       <div className="justify-self-end pr-2">
-        <h3>{formatPrice(product?.price || 0 * CartProduct.quantity)}</h3>
+        {product && <h3>{formatPrice(product.price * product.quantity)}</h3>}
       </div>
     </div>
   );
