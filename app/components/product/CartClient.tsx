@@ -4,12 +4,12 @@ import Link from "next/link";
 import { MdArrowBack } from "react-icons/md";
 import Heading from "../Heading";
 import Button from "./Button";
-import Image from "next/image";
 import ItemContent from "./ItemContent";
 import { formatPrice } from "@/utils/formatPrice";
 
 const CartClient = () => {
-  const { cartProducts, handleclearCart } = useCart();
+
+  const { cartProducts, handleclearCart,carttotal } = useCart();
   if (!cartProducts || cartProducts.length === 0) {
     return (
       <div className="flex flex-col items-center gap-2">
@@ -43,7 +43,7 @@ const CartClient = () => {
         <div className="text-sm items-start flex flex-col gap-1">
           <div className="flex justify-between w-full text-base font-semibold">
             <span>SubTotal : </span>
-            <span>{formatPrice(cartProducts?.reduce((a, b) => a + b.price, 0))}</span>
+            <span>{formatPrice(carttotal)}</span>
           </div>
           <p className="text-slate-500">
             Taxes and shipping calculated at checkout
