@@ -8,7 +8,7 @@ import Button from "../product/Button";
 import Link from "next/link";
 import { AiOutlineGoogle } from "react-icons/ai";
 
-const SignupFrom = () => {
+const LoginFrom = () => {
   const [isLoading, setIsLoading] = useState(false);
   const {
     register,
@@ -16,7 +16,6 @@ const SignupFrom = () => {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      name: "",
       email: "",
       password: "",
     },
@@ -27,26 +26,18 @@ const SignupFrom = () => {
   };
   return (
     <>
-      <Heading title="Sign Up" />
+      <Heading title="Sign In" />
       <div>
-        <Button 
-        label="Sign Up with Google" 
-        onClick={() => {}}
-        outline 
-        icon={AiOutlineGoogle} />
+        <Button
+          label="Sign in with Google"
+          onClick={() => {}}
+          outline
+          icon={AiOutlineGoogle}
+        />
       </div>
       <hr className="w-full" />
       <div className="w-full items-center justify-center flex">
         <form className="space-y-2">
-          <Input
-            id="name"
-            label="Name"
-            disabled={isLoading}
-            register={register}
-            errors={errors}
-            required
-            type="text"
-          />
           <Input
             id="email"
             label="E-mail"
@@ -67,22 +58,19 @@ const SignupFrom = () => {
           />
           <Button
             onClick={handleSubmit(onSubmit)}
-            label={isLoading ? "Loading..." : "Sign Up"}
-            // className="w-2/4 mx-auto"
-            // variant="contained"
-            // type="submit"
-            // disabled={isLoading}
+            label={isLoading ? "Loading..." : "Login"}
+            disabled={isLoading}
           />
         </form>
       </div>
       <p className="text-center">
-        Already have an account?{" "}
-        <Link className="text-blue-500" href="/login">
-          Login
+        Don&apos;t have an account?{" "}
+        <Link className="text-blue-500" href="/signup">
+          Sing up
         </Link>
       </p>
     </>
   );
 };
 
-export default SignupFrom;
+export default LoginFrom;

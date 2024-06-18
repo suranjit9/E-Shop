@@ -50,7 +50,7 @@ export const CartContextProvider = (Props: Props) => {
             acc.qty += item.quantity;
             return acc;
           },
-          { total: 0, qty: 0 }
+          { total: 0, qty: 0 } 
         );
         setCartTotalQTY(qty);
         setcartTotal(total);
