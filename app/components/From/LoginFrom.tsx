@@ -6,7 +6,7 @@ import Input from "../inputes/Input";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Button from "../product/Button";
 import Link from "next/link";
-import { AiOutlineGoogle } from "react-icons/ai";
+import { AiOutlineGithub, AiOutlineGoogle } from "react-icons/ai";
 
 const LoginFrom = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -27,12 +27,20 @@ const LoginFrom = () => {
   return (
     <>
       <Heading title="Sign In" />
-      <div>
+      <div className="w-[55%] gap-4 items-center justify-center flex">
         <Button
-          label="Sign in with Google"
+          custom="w-1/2 "
+          label="Google"
           onClick={() => {}}
           outline
           icon={AiOutlineGoogle}
+        />
+        <Button
+          custom="w-1/2"
+          label=" Github"
+          onClick={() => {}}
+          outline
+          icon={AiOutlineGithub}
         />
       </div>
       <hr className="w-full" />
