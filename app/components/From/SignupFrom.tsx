@@ -7,6 +7,10 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Button from "../product/Button";
 import Link from "next/link";
 import { AiOutlineGoogle } from "react-icons/ai";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const SignupFrom = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -21,19 +25,51 @@ const SignupFrom = () => {
       password: "",
     },
   });
+
+  const router = useRouter();
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
     console.log(data);
+    axios
+      .post("/api/signup", data)
+      .then((res) => {
+        console.log(res);
+        signIn("credentials", {
+          email: data.email,
+          password: data.password,
+          redirect: false,
+        }).then((callback) => {
+          if (callback?.ok) {
+            router.push("/signin");
+            router.refresh();
+            toast.success("Account Sign In successfully");
+          }
+          if (callback?.error) {
+            toast.error(callback.error);
+          }
+        });
+        if (res.status === 200) {
+          toast.success("Account created successfully");
+        }
+      })
+      .catch((error) => {
+        toast.error("Something went wrong");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
   return (
     <>
+      {/* <Toaster/> */}
       <Heading title="Sign Up" />
       <div>
-        <Button 
-        label="Sign Up with Google" 
-        onClick={() => {}}
-        outline 
-        icon={AiOutlineGoogle} />
+        <Button
+          label="Sign Up with Google"
+          onClick={() => {}}
+          outline
+          icon={AiOutlineGoogle}
+        />
       </div>
       <hr className="w-full" />
       <div className="w-full items-center justify-center flex">
